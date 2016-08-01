@@ -1,5 +1,5 @@
 {
-  "name": "vozes-da-gente",
+  "name": "voz-da-gente",
   "version": "1.0.0",
   "description": "��#\u0000 \u0000v\u0000o\u0000z\u0000e\u0000s\u0000-\u0000d\u0000a\u0000-\u0000g\u0000e\u0000n\u0000t\u0000e\u0000\r\u0000 \u0000",
   "main": "index.js",
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/squireChuck/vozes-da-gente.git"
+    "url": "git+https://github.com/squireChuck/voz-da-gente.git"
   },
   "author": "squireChuck",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/squireChuck/vozes-da-gente/issues"
+    "url": "https://github.com/squireChuck/voz-da-gente/issues"
   },
-  "homepage": "https://github.com/squireChuck/vozes-da-gente#readme"
+  "homepage": "https://github.com/squireChuck/voz-da-gente#readme"
 }
