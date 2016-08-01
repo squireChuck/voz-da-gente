@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/squireChuck/voz-da-gente/issues"
   },
-  "homepage": "https://github.com/squireChuck/voz-da-gente#readme"
+  "homepage": "https://github.com/squireChuck/voz-da-gente#readme",
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0"
+  }
 }
