@@ -1,4 +1,20 @@
-﻿# vozes-da-gente
+﻿# voz-da-gente
+
+Prereq's:
+1. A forvo api key from Forvo's website.
+
+Example setup steps:
+1. Clone repo.
+
+2. Create a config/config.json in the project's root folder with your forvo api key, e.g.
+```json
+{
+    "FORVO_API_KEY":"your_api_key_here_abc_123"
+}```
+
+3. Using your fav command prompt, start the app by nav'ing to the project's root folder and running `node app.js` 
+
+4. Check http://localhost:3000/api/samplePhrase in your browser - if you get some json, you're all set!
 
 Goals: 
 
