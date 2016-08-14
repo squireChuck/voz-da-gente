@@ -1,6 +1,7 @@
 ﻿# voz-da-gente
 
 Prereq's:
+
 1. A forvo api key from Forvo's website.
 
 Example setup steps:
@@ -10,7 +11,8 @@ Example setup steps:
 ```json
 {
     "FORVO_API_KEY":"your_api_key_here_abc_123"
-}```
+}
+```
 
 3. Using your fav command prompt, start the app by nav'ing to the project's root folder and running `node app.js` 
 
