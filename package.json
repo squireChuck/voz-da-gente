@@ -16,7 +16,8 @@
     "url": "https://github.com/squireChuck/voz-da-gente/issues"
   },
   "homepage": "https://github.com/squireChuck/voz-da-gente#readme",
-  "devDependencies": {
+  "dependencies": {
+    "async": "^2.0.1",
     "body-parser": "^1.15.2",
     "ejs": "^2.5.1",
     "express": "^4.14.0"
