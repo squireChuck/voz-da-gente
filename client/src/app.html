@@ -1,0 +1,37 @@
+<template>
+  <h1>${heading}</h1>
+  <div>
+    <a href="http://forvo.com/" title="Pronunciations by Forvo">
+      <img src="http://api.forvo.com/byforvoblue.gif" width="120" height="40" alt="Pronunciations by Forvo" style="border:0" />
+    </a>
+  </div>
+  <!--
+  <form submit.trigger="addTodo()">
+    <input type="text" value.bind="todoDescription">
+    <button type="submit">Add Todo</button>
+  </form>
+
+  <ul>
+    <li repeat.for="todo of todos">
+      <input type="checkbox" checked.bind="todo.done">
+      <span css="text-decoration: ${todo.done ? 'line-through' : 'none'}">
+        ${todo.description}
+      </span>
+      <button click.trigger="removeTodo(todo)">Remove</button>
+    </li>    
+  </ul>
+  -->
+  
+  <form submit.trigger="getForvos()">
+    <!--<input type="text" value.bind="phrase">-->
+    <textarea rows="5" columns="40" name="text" value.bind="phrase"></textarea>
+    <br><button type="submit">Get Forvos</button>
+  </form>
+  <div repeat.for="forvoObj of listOfForvoObjs">
+    <h2>${forvoObj.word}</h2>    
+    <div repeat.for="props of forvoObj.props">
+      <audio controls src="${props.audioLink}" label="${forvoObj.word}">Browser doesn't support the audio tag...</audio>
+      ${props.gender === 'm' ? 'male' : 'female'} in ${props.country}
+    </div>
+  </div>
+</template>

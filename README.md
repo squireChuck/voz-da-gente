@@ -4,6 +4,8 @@
 
 1. A forvo api key from Forvo's website.
 
+2. Nodejs
+
 ## Example setup steps:
 1. Clone repo.
 
@@ -16,7 +18,16 @@
 
 3. Using your fav command prompt, start the app by nav'ing to the project's root folder and running `node app.js` 
 
-4. Check http://localhost:3000/api/samplePhrase in your browser - if you get some json, you're all set!
+4. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some json, you're all set!
+
+## Todo list:
+1. Troubleshoot words that have non-english chars, e.g. secretária, português.
+
+2. Lazy load the audio links to save on Forvo api calls, e.g. click button in order to load audio controls.
+
+3. Pretty up the app.
+
+4. forvoService.getForvoObjects() => remove that response parameter
 
 ## Goals: 
 
@@ -25,10 +36,14 @@
 2. Enter block of text - hear selected words by native speakers a la Google translate, Forvo, etc.
 
 ## Reflections:
-1. The async npm package makes easy work of processing/aggregating the results of a list of requests.
+1. Skills exercised: js on node (api endpoints), hitting external api (Forvo), html 5, Aurelia (core and http-client), promises, async, dotenv 
 
-2. Even though I went with a simple config.json, the dotenv npm package looked nice. Provides an easy way to set environment config (e.g. api keys) and get them from process.env.
+2. The async npm package makes easy work of processing/aggregating the results of a list of requests.
 
-3. Pulling the httpOptions out of the controller and into a model (e.g. forvoHttpOptions) made it really easy to to build a bunch of options while varying the word/lang/etc.
+3. Even though I went with a simple config.json, the dotenv npm package looked nice. Provides an easy way to set environment config (e.g. api keys) and get them from process.env.
 
-4. Felt good to have the apiController pass off processing to a service - cut down a lotta code noise in the controller.
+4. Pulling the httpOptions out of the controller and into a model (e.g. forvoHttpOptions) made it really easy to to build a bunch of options while varying the word/lang/etc.
+
+5. Felt good to have the apiController pass off processing to a service - cut down a lotta code noise in the controller.
+
+6. Got some Aurelia action (with the aurelia-http-client extra) going on! Like the split between view/html/css and behavior/js.

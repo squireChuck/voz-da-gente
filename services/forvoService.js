@@ -22,11 +22,16 @@ function getForvoObjects(listOfForvoHttpOptions, res) {
 
                     resX.on('end', function() {
                         var forvoRes = JSON.parse(jsonRes);
-                        var mp3Links = forvoRes.items.map(function(forvoObj) {
-                            return forvoObj.pathmp3;
+                        var props = forvoRes.items.map(function(forvoObj) {
+                            // Get attributes from Forvo's response.
+                            return {
+                                'gender': forvoObj.sex,
+                                'country': forvoObj.country,
+                                'audioLink' : forvoObj.pathmp3};
                         });
      
-                        callback(null, {'word': thisWord, 'links': mp3Links});
+                        // This obj makes it back into the view.
+                        callback(null, {'word': thisWord, 'props': props});
                     });
                 });
                 
