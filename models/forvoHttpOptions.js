@@ -1,4 +1,5 @@
 var envConfig = require('../config/config');
+var qs = require('querystring');
 
 // Construct the http options needed to hit the Forvo web API.
 // The args specify which parts of the api we can currently vary in our app, 
@@ -6,7 +7,7 @@ var envConfig = require('../config/config');
 function ForvoHttpOptions(word, lang) {
     this.word = word;
     this.host = 'apifree.forvo.com',
-    this.path = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/word-pronunciations/word/' + word + '/language/' + lang,
+    this.path = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/word-pronunciations/word/' + qs.escape(this.word) + '/language/' + lang,
     this.method = 'GET'  
     
     this.getHttpOptions = function() {

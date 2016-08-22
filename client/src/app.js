@@ -35,4 +35,16 @@ export class App {
       this.phrase = '';
     }
   }
+
+/*
+ * Let the user get a sample phrase for a quick demo of what the app will do.
+ */
+  getSamplePhrase() {
+    let client = new HttpClient();
+      client.get('http://localhost:3000/voz/api/samplePhrase')
+        .then(data => {
+          console.log(JSON.parse(data.response));
+          this.phrase = JSON.parse(data.response).phrase;
+        });
+  }
 }
