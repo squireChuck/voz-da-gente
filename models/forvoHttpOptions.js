@@ -7,13 +7,24 @@ var qs = require('querystring');
 function ForvoHttpOptions(word, lang) {
     this.word = word;
     this.host = 'apifree.forvo.com',
-    this.path = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/word-pronunciations/word/' + qs.escape(this.word) + '/language/' + lang,
-    this.method = 'GET'  
+    // min-pronounciations over 5000 arbitrarily chosen - didn't want the list overwhelmingly long
+    this.langListPath = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/language-list/order/name/language/en/min-pronunciations/5000',
+    this.wordPath = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/word-pronunciations/word/' + qs.escape(this.word) + '/language/' + lang,
+    this.method = 'GET'  , 
     
-    this.getHttpOptions = function() {
+    
+    this.getWordHttpOptions = function() {
         return {
             'host': this.host,
-            'path': this.path,
+            'path': this.wordPath,
+            'method': this.method 
+        };
+    }
+
+    this.getLangListHttpOptions = function() {
+        return {
+            'host': this.host,
+            'path': this.langListPath,
             'method': this.method 
         };
     }

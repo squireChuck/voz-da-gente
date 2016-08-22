@@ -21,7 +21,14 @@
     </li>    
   </ul>
   -->
-  <button click.trigger="getSamplePhrase()">Get sample phrase</button>
+  <div>
+    <button click.trigger="getSamplePhrase()">Get sample phrase</button>
+  </div>
+  <div>
+    <select value.bind="selectedLang">  
+      <option repeat.for="lang of langList" value="${lang.langCode}">${lang.langName}</option>
+    </select>
+  </div>
   <form submit.trigger="getForvos()">
     <!--<input type="text" value.bind="phrase">-->
     <textarea rows="5" columns="40" name="text" value.bind="phrase"></textarea>

@@ -10,7 +10,7 @@ function getForvoObjects(listOfForvoHttpOptions, res) {
     asyncHttp.map(listOfForvoHttpOptions, 
             function(forvoHttpOption, callback) {
                 var thisWord = forvoHttpOption.word;
-                var httpOptions = forvoHttpOption.getHttpOptions();
+                var httpOptions = forvoHttpOption.getWordHttpOptions();
 
                 
                 var entry;
