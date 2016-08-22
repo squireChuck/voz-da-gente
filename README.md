@@ -47,3 +47,7 @@
 5. Felt good to have the apiController pass off processing to a service - cut down a lotta code noise in the controller.
 
 6. Got some Aurelia action (with the aurelia-http-client extra) going on! Like the split between view/html/css and behavior/js.
+
+7. For international/accented chars, used the node library 'querystring' to escape the word before sending it to Forvo's api. This fixed the bug that prevented words like 'aplicação' from getting voice clip results.
+
+8. Aurelia's data binding made easy work of displaying a bunch of dropdown options from an api response.
