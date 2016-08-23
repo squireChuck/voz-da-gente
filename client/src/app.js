@@ -4,11 +4,13 @@ export class App {
   constructor() {
     console.log('constructing app...');
     this.heading = "Voz da gente";
-    this.phrase = '';
+    this.phrase = 'comer dizer';
+    this.userPhrase = '';
     this.listOfForvoObjs = [];
     this.langList = [];
     this.selectedLang = 'pt'; // easy for my learning. :)
-    
+    this.filterableCountries = [];
+
     this.getLangList();
 
     // this.todos = [];
@@ -29,6 +31,26 @@ export class App {
   //   }
   // }
 
+  // Return set of countries from a list of forvoObjs
+  getCountryListFromForvoObj(forvoObjs) {
+    var returnList = forvoObjs.map(
+      function (forvoObj) {
+        return forvoObj.props;
+    }).reduce(function(a, b) {
+        return a.concat(b);
+    }, []).map(
+      function(forvoProp) {
+        return forvoProp.country;
+    });
+
+    returnList.sort(
+      function (country1, country2) {
+        return country1.localeCompare(country2); 
+    });
+
+    return new Set(returnList);
+  }
+
   getForvos() {
     if (this.phrase && this.selectedLang) {
       let client = new HttpClient();
@@ -36,7 +58,11 @@ export class App {
           + '&lang=' + this.selectedLang)
         .then(data => {
           this.listOfForvoObjs = JSON.parse(data.response);
+          
+          // Let the user filter by the countries found for the words returned. 
+          this.filterableCountries = this.getCountryListFromForvoObj(this.listOfForvoObjs);
         });
+      this.userPhrase = this.phrase;
       this.phrase = '';
     }
   }
