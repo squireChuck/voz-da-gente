@@ -22,6 +22,10 @@ module.exports = function(app) {
             {
                 'phrase': 'You rock', 
                 'lang': 'en'
+            },
+            {
+                'phrase': 'cómo estás',
+                'lang': 'es'
             }
         ]
 
