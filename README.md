@@ -21,6 +21,8 @@
 
 5. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some json, you're all set!
 
+6. Visit the web app (with the default client) at http://localhost:3000/voz 
+
 ## Todo list:
 1. Troubleshoot words that have non-english chars, e.g. secretária, português.
 
