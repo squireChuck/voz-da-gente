@@ -15,10 +15,11 @@
     "FORVO_API_KEY":"your_api_key_here_abc_123"
 }
 ```
+3. Using your fav command prompt, nav to the project's root folder and `npm install` to install the dependencies.
 
-3. Using your fav command prompt, start the app by nav'ing to the project's root folder and running `node app.js` 
+4. Start the app by running `node app.js` in the project's root folder.
 
-4. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some json, you're all set!
+5. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some json, you're all set!
 
 ## Todo list:
 1. Troubleshoot words that have non-english chars, e.g. secretária, português.
