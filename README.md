@@ -21,14 +21,7 @@
 
 5. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some json, you're all set!
 
-## Todo list:
-1. Troubleshoot words that have non-english chars, e.g. secretária, português.
-
-2. Lazy load the audio links to save on Forvo api calls, e.g. click button in order to load audio controls.
-
-3. Pretty up the app.
-
-4. forvoService.getForvoObjects() => remove that response parameter
+6. Visit the web app (with the default client) at http://localhost:3000/voz 
 
 ## Goals: 
 
