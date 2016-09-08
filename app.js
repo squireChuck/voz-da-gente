@@ -16,4 +16,6 @@ app.get('/voz', function(req,res){
  res.sendFile(__dirname + '/client/index.html');
 });
 
-app.listen(port);
+var listener = app.listen(port, function(){
+    console.log('Listening on port ' + listener.address().port + '...'); 
+});

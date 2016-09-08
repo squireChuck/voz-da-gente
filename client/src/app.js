@@ -4,7 +4,7 @@ export class App {
   constructor() {
     console.log('constructing app...');
     this.heading = "Voz da gente";
-    this.phrase = 'comer dizer';
+    this.phrase = '';
     this.userPhrase = '';
     this.listOfForvoObjs = [];
     this.langList = [];
