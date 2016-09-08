@@ -4,7 +4,9 @@
 
 1. A forvo api key from Forvo's website.
 
-2. Nodejs
+2. A Google Cloud Vision project and keyfile.
+
+3. Nodejs
 
 ## Example setup steps:
 1. Clone repo.
@@ -15,6 +17,9 @@
     "FORVO_API_KEY":"your_api_key_here_abc_123"
 }
 ```
+3. config/googleVisionKeyfile.json => TODO Instructions on how to do this.
+
+
 3. Using your fav command prompt, nav to the project's root folder and `npm install` to install the dependencies.
 
 4. Start the app by running `node app.js` in the project's root folder.

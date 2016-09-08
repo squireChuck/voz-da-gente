@@ -3,8 +3,7 @@ var gVisionService = require('../services/gVisionService');
 module.exports = function(app) {
 
     app.get('/voz/api/sampleImage', function(req, res) {
-        // Sample image...
-        //C:\Users\Charlie\Documents\prog\voz-da-gente\sampleImages\nicolau1.jpg
+        // Sample image on server...
         var sampleImage = 'sampleImages/nicolau1.jpg';
 
         gVisionService.detectText(sampleImage, 
