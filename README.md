@@ -11,14 +11,13 @@
 ## Example setup steps:
 1. Clone repo.
 
-2. Create a config/config.json in the project's root folder with your forvo api key, e.g.
+2. Create a config/config.json in the project's root folder with your forvo api key, e.g. 
 ```json
 {
     "FORVO_API_KEY":"your_api_key_here_abc_123"
 }
-```
+``` 
 3. config/googleVisionKeyfile.json => TODO Instructions on how to do this.
-
 
 3. Using your fav command prompt, nav to the project's root folder and `npm install` to install the dependencies.
 
