@@ -6,22 +6,6 @@
       <img src="http://api.forvo.com/byforvoblue.gif" width="120" height="40" alt="Pronunciations by Forvo" style="border:0" />
     </a>
   </div>
-  <!--
-  <form submit.trigger="addTodo()">
-    <input type="text" value.bind="todoDescription">
-    <button type="submit">Add Todo</button>
-  </form>
-
-  <ul>
-    <li repeat.for="todo of todos">
-      <input type="checkbox" checked.bind="todo.done">
-      <span css="text-decoration: ${todo.done ? 'line-through' : 'none'}">
-        ${todo.description}
-      </span>
-      <button click.trigger="removeTodo(todo)">Remove</button>
-    </li>    
-  </ul>
-  -->
   <div>
     <button click.trigger="getSamplePhrase()">Get sample phrase</button>
   </div>
@@ -30,15 +14,17 @@
     <input type="file" accept="image/*" files.bind="userImages">
     <button click.trigger="getTextFromImage()">Process image</button>
   </div>
-  <div>
-    <select value.bind="selectedLang">  
-      <option repeat.for="lang of langList" value="${lang.langCode}">${lang.langName}</option>
-    </select>
-  </div>
   <form submit.trigger="getForvos()">
-    <!--<input type="text" value.bind="phrase">-->
-    <textarea spellcheck="false" rows="5" columns="40" name="text" value.bind="phrase"></textarea>
-    <br><button type="submit">Get Forvos</button>
+    <div>
+      <select value.bind="selectedLang">
+        <option value="">Select the phrase's language</option>  
+        <option repeat.for="lang of langList" value="${lang.langCode}">${lang.langName}</option>
+      </select>
+    </div>
+    <div>
+      <textarea spellcheck="false" rows="5" columns="40" name="text" value.bind="phrase"></textarea>
+    <div>
+    <div><button type="submit">Get Forvos</button></div>
   </form>
   <div><h2>Phrase</h2> ${userPhrase}</div>
   <div>

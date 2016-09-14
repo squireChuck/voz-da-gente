@@ -13,26 +13,11 @@ export class App {
     this.userImages;
 
     this.getLangList();
-
-    // this.todos = [];
-    // this.todoDescription = '';
   }
 
-  // addTodo() {
-  //   if (this.todoDescription) {
-  //     this.todos.push(new Todo(this.todoDescription));
-  //     this.todoDescription = '';
-  //   }
-  // }
-
-  // removeTodo(todo) {
-  //   let index = this.todos.indexOf(todo);
-  //   if (index !== -1) {
-  //     this.todos.splice(index, 1);
-  //   }
-  // }
-
-  // Return set of countries from a list of forvoObjs
+  /*
+   * Return set of countries from a list of forvoObjs
+   */
   getCountryListFromForvoObj(forvoObjs) {
     var returnList = forvoObjs.map(
       function (forvoObj) {
@@ -52,6 +37,9 @@ export class App {
     return new Set(returnList);
   }
 
+  /*
+   * Make a request to parse the entered phrase for the selected language.
+   */
   getForvos() {
     if (this.phrase && this.selectedLang) {
       let client = new HttpClient();
@@ -68,21 +56,24 @@ export class App {
     }
   }
 
-getLangList() {
-  let client = new HttpClient();
-  client.get('http://localhost:3000/voz/api/langs')
-    .then(data => {
-      this.langList = JSON.parse(data.response).langs;
-      this.langList.sort(
-        function (lang1, lang2) {
-          return lang1.langName.localeCompare(lang2.langName); 
-        });
-    });
-}
+  /*
+   * The list of languages user can process their phrase for.
+   */ 
+  getLangList() {
+    let client = new HttpClient();
+    client.get('http://localhost:3000/voz/api/langs')
+      .then(data => {
+        this.langList = JSON.parse(data.response).langs;
+        this.langList.sort(
+          function (lang1, lang2) {
+            return lang1.langName.localeCompare(lang2.langName); 
+          });
+      });
+  }
 
-/*
- * Let the user get a sample phrase for a quick demo of what the app will do.
- */
+  /*
+   * Let the user get a sample phrase for a quick demo of what the app will do.
+   */
   getSamplePhrase() {
     let client = new HttpClient();
     client.get('http://localhost:3000/voz/api/samplePhrase')
@@ -115,7 +106,9 @@ getLangList() {
    */
   makeFileRequest(url, fileToUpload) {
 
-    return new Promise(function(resolve, reject) {
+    var arrayBufferToBase64Func = this.arrayBufferToBase64;
+
+    return new Promise((resolve, reject) => {
       var imgArrBuff;
       var fileReader = new FileReader();
       let client = new HttpClient();
@@ -125,23 +118,17 @@ getLangList() {
         // Read in file    
         imgArrBuff = fileReader.result;
 
-        // Encode an array buffer as base 64 string.
-        var binary = '';
-        var bytes = new Uint8Array( imgArrBuff );
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode( bytes[ i ] );
-        }
-        var base64String = window.btoa( binary );
-        // End - encode an array buffer as base 64 string.
+        // Convert to base64 string for Google Vision.
+        var base64String = arrayBufferToBase64Func(imgArrBuff);
         
+        // Request to get text from image.
         client.post(url, {'userImage' : base64String})
           .then(data => {
-            this.phrase = JSON.parse(data.response).text;
+            var phrase = JSON.parse(data.response).text;
             console.log('phrase is...');
-            console.log(this.phrase.substring(0,100));
+            console.log(phrase.substring(0,100));
 
-            resolve(JSON.parse(data.response).text);
+            resolve(phrase);
           }).catch(function() { 
             console.log("Messed up in the file upload... :( ");
             reject("Messed up in the file upload... :( ");
@@ -150,18 +137,19 @@ getLangList() {
 
         fileReader.readAsArrayBuffer(fileToUpload);
       });
-    
   }
 
-  // Encode an array buffer as base 64 string.
-  // http://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
-  // arrayBufferToBase64( buffer ) {
-  //   var binary = '';
-  //   var bytes = new Uint8Array( buffer );
-  //   var len = bytes.byteLength;
-  //   for (var i = 0; i < len; i++) {
-  //       binary += String.fromCharCode( bytes[ i ] );
-  //   }
-  //   return window.btoa( binary );
-  // }
+  /*
+   * Encode an array buffer as base 64 string.
+   * http://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
+   */
+  arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return window.btoa( binary );
+  }
 }
