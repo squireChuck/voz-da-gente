@@ -96,61 +96,66 @@ getLangList() {
    * Let user upload image to process its text into something we can hit Forvo with.
    */
   getTextFromImage() {
-    console.log('In file method...');
-    this.testMethod();
     if (this.userImages) {
-      var imgArrBuff;
-      var fileReader = new FileReader();
-      let client = new HttpClient();
-      this.phrase = "test3";
-
       // Possible solution to this problem
       // http://stackoverflow.com/questions/34495796/javascript-promises-with-filereader
       this.makeFileRequest('http://localhost:3000/voz/api/imageText', this.userImages[0])
         .then(
           (result) => { 
             console.log("returned a result!!!"); 
-            console.log(result)}, 
+            this.phrase = result;},
           (error) => { 
-            console.log("nooooo broke it all"); });
-
-      fileReader.onload = function () {
-          this.phrase = "test1";
-          // Read in file    
-          imgArrBuff = fileReader.result;
-
-          // Encode an array buffer as base 64 string.
-          var binary = '';
-          var bytes = new Uint8Array( imgArrBuff );
-          var len = bytes.byteLength;
-          for (var i = 0; i < len; i++) {
-              binary += String.fromCharCode( bytes[ i ] );
-          }
-          var base64String = window.btoa( binary );
-          // End - encode an array buffer as base 64 string.
-          
-          client.post('http://localhost:3000/voz/api/imageText', {'userImage' : base64String})
-            .then(data => {
-              this.phrase = JSON.parse(data.response).text;
-              console.log('phrase is...');
-              console.log(this.phrase.substring(0,100));
-            });
-           this.phrase = "test2"; 
-
-      };
-      this.phrase = "test4";
-      fileReader.readAsArrayBuffer(this.userImages[0]);
+            console.log("nooooo everything's broken and the sky's falliiiiiing!!1!!"); 
+        });
     }
-    console.log('Outta file method...');
   }
 
+  /*
+   * Send a single file to the specified url.
+   */
   makeFileRequest(url, fileToUpload) {
-    console.log("i'm in the place!!!!");
+
+    return new Promise(function(resolve, reject) {
+      var imgArrBuff;
+      var fileReader = new FileReader();
+      let client = new HttpClient();
+
+      fileReader.onload = function () {
+
+        // Read in file    
+        imgArrBuff = fileReader.result;
+
+        // Encode an array buffer as base 64 string.
+        var binary = '';
+        var bytes = new Uint8Array( imgArrBuff );
+        var len = bytes.byteLength;
+        for (var i = 0; i < len; i++) {
+            binary += String.fromCharCode( bytes[ i ] );
+        }
+        var base64String = window.btoa( binary );
+        // End - encode an array buffer as base 64 string.
+        
+        client.post(url, {'userImage' : base64String})
+          .then(data => {
+            this.phrase = JSON.parse(data.response).text;
+            console.log('phrase is...');
+            console.log(this.phrase.substring(0,100));
+
+            resolve(JSON.parse(data.response).text);
+          }).catch(function() { 
+            console.log("Messed up in the file upload... :( ");
+            reject("Messed up in the file upload... :( ");
+          });
+        };
+
+        fileReader.readAsArrayBuffer(fileToUpload);
+      });
+    
   }
 
   // Encode an array buffer as base 64 string.
   // http://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
-  // function _arrayBufferToBase64( buffer ) {
+  // arrayBufferToBase64( buffer ) {
   //   var binary = '';
   //   var bytes = new Uint8Array( buffer );
   //   var len = bytes.byteLength;
