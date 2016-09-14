@@ -20,9 +20,33 @@ function detectText (inputFile, callback) {
     if (err) {
       return callback(err);
     }
-    console.log('result:', JSON.stringify(text, null, 2));
+    //console.log('result:', JSON.stringify(text, null, 2));
     callback(null, text);
   });
 }
 
-module.exports = { 'detectText' : detectText };
+function getTextFromImage(inputFile, callback) {
+  var gVisionRequest = 
+    
+        {
+          "features": [
+            {
+            "type": "TEXT_DETECTION"
+            }
+          ],
+          "image": {
+            "content": inputFile
+          }
+        }
+    ;
+  //console.log(JSON.stringify(gVisionRequest));
+  vision.annotate(gVisionRequest, function(err, annotations, apiResponse) {
+     if (err) {
+      return callback(err);
+    }
+
+    callback(null, apiResponse.responses);
+  });
+}
+
+module.exports = { 'detectText' : detectText, 'getTextFromImage' : getTextFromImage };

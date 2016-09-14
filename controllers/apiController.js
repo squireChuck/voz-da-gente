@@ -1,12 +1,32 @@
-//var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
 var ForvoHttpOptions = require('../models/forvoHttpOptions');
 var forvoService = require('../services/forvoService');
+var gVisionService = require('../services/gVisionService');
 var http = require('http');
 
 module.exports = function(app) {
-    // TODO Use body-parser once we add POST features.
-    // app.use(bodyParser.json());
-    // app.use(bodyParser.urlencoded({extended: true}));
+    
+    app.post('/voz/api/imageText', function(req, res) {
+        // Sample image on server...
+        console.log('POST endpoint for image...');
+        var sampleImage = req.body.userImage;
+        gVisionService.getTextFromImage(sampleImage, 
+            function (err, text) {
+                if (err) {
+                    console.log('Call to goog failed');
+                    console.log(err);
+                    res.send({'msg' : 'No luck!!!'});
+                    return;
+                }
+
+                console.log('Found some text!');
+                console.log(JSON.stringify(text).substring(0, 300));
+                console.log(text[0].textAnnotations[0].description.substring(0, 100));
+                res.send({'text' : text[0].textAnnotations[0].description}); // Send found labels.
+
+                return;
+            });
+    });
 
     app.get('/voz/api/langs', function(req, res) {
         // TODO This constructor call is silly looking - needs refactoring.
