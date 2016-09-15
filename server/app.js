@@ -11,7 +11,6 @@ app.use('/src', express.static(path.resolve(__dirname + '/../client/src')));
 app.use(bodyParser.json({'limit':'5mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
-
 // Redirect url's with trailing slashes to the same URL but sans the slash. 
 app.use(function(req, res, next) {
    if(req.url.substr(-1) == '/' && req.url.length > 1)

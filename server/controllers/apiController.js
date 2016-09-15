@@ -74,8 +74,15 @@ module.exports = function(app) {
             });
 
         console.log('Starting requests for: ' + wordsInPhrase.join(', '));
-        // TODO how can this method work w/o sending in response? Promises???
-        forvoService.getForvoObjects(listOfHttpOptions, res);
+        
+        forvoService.getForvoObjects(listOfHttpOptions)
+            .then(results => {
+                console.log("In the phrase endpoint, I'm a promise now! :D");
+                res.send(results);
+            }, error => {
+                console.log("I'm broken in the phrase endpoint... :( ");
+                res.send("Unable to parse phrase request...");
+            });
     });
 
     // Use the word as is and return info if found.
@@ -88,7 +95,14 @@ module.exports = function(app) {
         listOfOptions.push(httpOptions);
 
         console.log('Starting requests for: ' + word);
-        // TODO how can this method work w/o sending in response? Promises???
-        forvoService.getForvoObjects(listOfOptions, res);
+        
+        forvoService.getForvoObjects(listOfOptions)
+            .then(results => {
+                console.log("In the word endpoint, I'm a promise now! :D");
+                res.send(results);
+            }, error => {
+                console.log("I'm broken in the word endpoint... :( ");
+                res.send("Unable to parse word request...");
+            });
     });
 }
