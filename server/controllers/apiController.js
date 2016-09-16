@@ -1,8 +1,20 @@
 var bodyParser = require('body-parser');
 var ForvoHttpOptions = require('../models/forvoHttpOptions');
 var forvoService = require('../services/forvoService');
-var gVisionService = require('../services/gVisionService');
+var googleVisionService = require('../services/googleVisionService');
 var http = require('http');
+
+function isExternalServiceEnabled(configFile, isEnabledCheck) {
+    try {
+        if (configFile && isEnabledCheck(configFile)) {
+            return true;
+        }
+    } catch (ex) {
+        
+    }
+
+    return false;
+}
 
 module.exports = function(app) {
     
@@ -10,7 +22,7 @@ module.exports = function(app) {
         // Sample image on server...
         console.log('POST endpoint for image...');
         var sampleImage = req.body.userImage;
-        gVisionService.getTextFromImage(sampleImage, 
+        googleVisionService.getTextFromImage(sampleImage, 
             function (err, text) {
                 if (err) {
                     console.log('Call to goog failed');
@@ -104,5 +116,41 @@ module.exports = function(app) {
                 console.log("I'm broken in the word endpoint... :( ");
                 res.send("Unable to parse word request...");
             });
+    });
+
+    /*
+     * Determine if an external service (e.g. Forvo, Google Vision) has 
+     * been configured correctly/enabled.
+     */
+    app.get('/voz/api/external/:service/isEnabled', function(req, res) {
+        var serviceToCheck = req.params.service;
+        var isEnabled;
+
+        if (serviceToCheck === 'forvo') {
+            isEnabled = isExternalServiceEnabled(require('../config/config'), 
+                function(fileToCheck) {
+                    // Need the forvo api key in order to use the app!
+                    if(fileToCheck.FORVO_API_KEY) {
+                        return true;
+                    }
+
+                    return false;
+                });
+        } else if (serviceToCheck === 'googleVision') {
+            isEnabled = isExternalServiceEnabled(require('../config/googleVisionKeyfile'), 
+                function(fileToCheck) {
+                    // If the google keyfile has these two fields, chances are the file was set up correctly.
+                    if(fileToCheck.private_key && fileToCheck.private_key_id) {
+                        return true;
+                    }
+                    
+                    return false;
+                });
+        } else {
+            isEnabled = false;
+        };
+        
+        res.send({"isEnabled": isEnabled});
+        return;
     });
 }

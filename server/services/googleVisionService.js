@@ -26,8 +26,7 @@ function detectText (inputFile, callback) {
 }
 
 function getTextFromImage(inputFile, callback) {
-  var gVisionRequest = 
-    
+  var googleVisionRequest = 
         {
           "features": [
             {
@@ -37,10 +36,9 @@ function getTextFromImage(inputFile, callback) {
           "image": {
             "content": inputFile
           }
-        }
-    ;
-  //console.log(JSON.stringify(gVisionRequest));
-  vision.annotate(gVisionRequest, function(err, annotations, apiResponse) {
+        };
+
+  vision.annotate(googleVisionRequest, function(err, annotations, apiResponse) {
      if (err) {
       return callback(err);
     }

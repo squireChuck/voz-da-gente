@@ -11,8 +11,28 @@ export class App {
     this.selectedLang = 'pt'; // easy for my learning. :)
     this.filterableCountries = [];
     this.userImages;
+    
+    // Enable/disable buttons if the external api's are config'd correctly. 
+    this.isExternalServiceEnabled('forvo')
+      .then(data => {
+        this.isForvoEnabled = JSON.parse(data.response).isEnabled;
+      });
+
+    this.isExternalServiceEnabled('googleVision')
+      .then(data => {
+        this.isGoogleVisionEnabled = JSON.parse(data.response).isEnabled;
+      });
 
     this.getLangList();
+  }
+
+  /*
+   * Check if features provided by external services are enabled.
+   */ 
+  isExternalServiceEnabled(serviceToCheck) {
+    let client = new HttpClient();
+    return client.get('http://localhost:3000/voz/api/external/' + serviceToCheck 
+      + '/isEnabled');
   }
 
   /*

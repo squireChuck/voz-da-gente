@@ -1,4 +1,4 @@
-var gVisionService = require('../services/gVisionService');
+var gVisionService = require('../services/googleVisionService');
 
 module.exports = function(app) {
 
