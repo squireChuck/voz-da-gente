@@ -44,7 +44,7 @@
 
 5. Felt good to have the apiController pass off processing to a service - cut down a lotta code noise in the controller.
 
-6. Got some Aurelia action (with the aurelia-http-client extra) going on! Like the split between view/html/css and behavior/js.
+6. Got some Aurelia action (with the aurelia-http-client extra) going on! Like the split between view/html/css and behavior/js. Useful binding like disabled.bind="isThisEnabled" (for buttons) or if.bind="!isThisTrue" (when determining if to render a tag or not).
 
 7. For international/accented chars, used the node library 'querystring' to escape the word before sending it to Forvo's api. This fixed the bug that prevented words like 'aplicação' from getting voice clip results.
 
@@ -56,4 +56,4 @@
 
 11. Google Cloud Vision - a little tricky setting up the auth and digesting/hitting the api... But infinitely easier than a home-grown text-from-image solution!!!! 
 
-12. Nice to have the client and server code separated into their own folders.
+12. Nice to have the client and server code separated into their own folders. Received an "Error: Forbidden" from Express' res.sendFile() - discovered it's necessary to require('path') and use path.resolve when navigating with relative paths (e.g. '../../client/src'). The '../' could be used maliciously if it came in from user - this tells Express to resolve the path.
