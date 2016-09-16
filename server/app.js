@@ -6,8 +6,10 @@ var sampleController = require('./controllers/sampleController');
 var apiController = require('./controllers/apiController');
 var port = process.env.PORT || 3000;
 
-app.use('/scripts', express.static(path.resolve(__dirname + '/../client/scripts')));
-app.use('/src', express.static(path.resolve(__dirname + '/../client/src')));  
+var clientRootPath = path.resolve(__dirname + '/../client');
+
+app.use('/scripts', express.static(clientRootPath + '/scripts'));
+app.use('/src', express.static(clientRootPath + '/src'));  
 app.use(bodyParser.json({'limit':'5mb'}));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -25,7 +27,7 @@ sampleController(app);
 apiController(app);
 
 app.get('/voz', function(req,res){
- res.sendFile(path.resolve(__dirname + '/../client/index.html'));
+ res.sendFile(clientRootPath + '/index.html');
 });
 
 var listener = app.listen(port, function(){
