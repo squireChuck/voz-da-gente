@@ -1,6 +1,6 @@
 ﻿# voz-da-gente
 
-## Prereq's:
+## Prereq's
 
 1. A forvo api key from Forvo's website.
 
@@ -8,7 +8,7 @@
 
 3. Nodejs
 
-## Example setup steps:
+## Setup
 1. Clone repo.
 
 2. Create a config/config.json in the project's root folder with your forvo api key, e.g. 
@@ -27,13 +27,13 @@
 
 6. Visit the web app (with the default client) at http://localhost:3000/voz 
 
-## Goals: 
+## Goals
 
 1. Experiment with html, css, Boostrap, Node, other js
 
 2. Enter block of text - hear selected words by native speakers a la Google translate, Forvo, etc.
 
-## Reflections:
+## The 20/20
 1. Skills exercised: js on node (api endpoints), hitting external api's (Forvo, Google Cloud Vision), html 5 (including file upload), Aurelia (core and http-client), promises (on client and server side), async, dotenv
 
 2. The async npm package makes easy work of processing/aggregating the results of a list of requests.
