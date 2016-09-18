@@ -77,7 +77,7 @@ module.exports = function(app) {
     app.get('/voz/api/phrase', function (req, res) {
         var phrase = req.query.phrase;
         var lang = req.query.lang;
-        var isFetchRecordingsEnabled = req.query.isFetchRecordingsEnabled;
+        var isFetchRecordingsEnabled = (req.query.isFetchRecordingsEnabled === 'true');
         
         // Getting words by delimiting on whitespaces and non-letter chars.
         var phraseParsingPattern = /[\n\r\s]+|[^a-zA-Z'\u00C0-\u017F]+/;
@@ -85,38 +85,23 @@ module.exports = function(app) {
             .sort(function (a, b) {
                 return a.toLowerCase().localeCompare(b.toLowerCase());
             });
+        
+        // Removing blanks from results.
+        var wordsInPhrase = wordsInPhrase.filter(function(word) {
+            return word != "";
+        });
 
-        var clientResponse = {};
+        console.log('Starting requests for: ' + wordsInPhrase.join(', '));
+        forvoService.getForvoObjects(wordsInPhrase, lang, isFetchRecordingsEnabled)
+            .then(data => {
+                console.log("In the phrase endpoint, I'm a promise now! :D");
+                res.send(data);
+            }, error => {
+                console.log("I'm broken in the phrase endpoint... :( ");
+                res.send("Unable to parse phrase request...");
+            });
 
-        // if (isFetchRecordingsEnabled === true) {
-            // Build the httpOptions for each word.
-            var listOfHttpOptions = wordsInPhrase.map(
-                function(word) {
-                    return new ForvoHttpOptions(word, lang);
-                });
-
-            console.log('Starting requests for: ' + wordsInPhrase.join(', '));
-            
-            forvoService.getForvoObjects(listOfHttpOptions)
-                .then(data => {
-                    console.log("In the phrase endpoint, I'm a promise now! :D");
-                    clientResponse.listOfForvoObjects = data;
-                    res.send(clientResponse);
-                }, error => {
-                    console.log("I'm broken in the phrase endpoint... :( ");
-                    res.send("Unable to parse phrase request...");
-                });
-            
-            return;
-        // }
-
-        // clientResponse = wordsInPhrase.forEach(function(word) {
-        //     return {"word" : word };
-        // });
-
-        // res.send(clientResponse);
-        // return;
-
+        return;
     });
 
     // Use the word as is and return info if found.
@@ -124,13 +109,12 @@ module.exports = function(app) {
         var word = req.query.word;
         var lang = req.query.lang;
 
-        var httpOptions = new ForvoHttpOptions(word, lang);
-        var listOfOptions = [];
-        listOfOptions.push(httpOptions);
+        var listOfWords = [];
+        listOfWords.push(word);
 
         console.log('Starting requests for: ' + word);
         
-        forvoService.getForvoObjects(listOfOptions)
+        forvoService.getForvoObjects(listOfWords, lang, true)
             .then(results => {
                 console.log("In the word endpoint, I'm a promise now! :D");
                 res.send(results);

@@ -20,7 +20,7 @@ function detectText (inputFile, callback) {
     if (err) {
       return callback(err);
     }
-    //console.log('result:', JSON.stringify(text, null, 2));
+    
     callback(null, text);
   });
 }

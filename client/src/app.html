@@ -46,9 +46,9 @@
     </div>
     <div><button type="submit" disabled.bind="!isForvoEnabled">Get Forvos</button></div>
   </form>
-  <div id="phrase"><h2>Phrase</h2> ${userPhrase}</div>
+  <div id="phrase"><h2>Original phrase</h2> ${userPhrase}</div>
   <div>
-    <h2>Found words</h2>
+    <h2>Words found in phrase</h2>
     <template repeat.for="forvoObj of listOfForvoObjs">
       <a href="#${forvoObj.word}">${forvoObj.word}</a>,
     </template>
@@ -65,9 +65,14 @@
       <option repeat.for="country of filterableCountries" value="${country}">${country}</option>
     </select>
   </div>
-  <h2>Words</h2>
+  <h2>Words and voice clips</h2>
   <div repeat.for="forvoObj of listOfForvoObjs">
-    <h3 id="${forvoObj.word}">${forvoObj.word} (<a href="#phrase">Back to phrase</a>)</h3>    
+    <h3 id="${forvoObj.word}">
+      ${forvoObj.word} 
+      <button click.trigger="getPropsForWord(forvoObj)">Get voice clips</button>
+      (<a href="#phrase">Back to phrase</a>)
+    </h3>    
+      
       <div repeat.for="props of forvoObj.props |  forvoPropertyFilter:'gender':filterGender.value | forvoPropertyFilter:'country':filterCountry.value">
       <!-- preload="none" so that Forvo audio/api requests are only made for 
            the audio clips that are played. 

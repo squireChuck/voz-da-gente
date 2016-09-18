@@ -30,21 +30,20 @@ export class App {
   }
 
   /*
-   * Check if features provided by external services are enabled.
-   */ 
-  isExternalServiceEnabled(serviceToCheck) {
-    let client = new HttpClient();
-    return client.get('http://localhost:3000/voz/api/external/' + serviceToCheck 
-      + '/isEnabled');
-  }
-
-  /*
    * Return set of countries from a list of forvoObjs
    */
-  getCountryListFromForvoObj(forvoObjs) {
-    var returnList = forvoObjs.map(
-      function (forvoObj) {
-        return forvoObj.props;
+  getCountryListFromForvoObj(forvoObjs, currentListOfCountries) {
+
+    // Find the forvo objects that have properties, which are the only ones
+    // we could get countries from.
+    var forvoObjsWithCountries = forvoObjs.filter(function(forvoObjToFilter) {
+      return forvoObjToFilter.props && (forvoObjToFilter.props.length > 0); 
+    });
+
+    // Collect the countries from the forvo objects.
+    var returnList = forvoObjsWithCountries.map(
+      function (forvoObj) {    
+          return forvoObj.props;
     }).reduce(function(a, b) {
         return a.concat(b);
     }, []).map(
@@ -52,12 +51,14 @@ export class App {
         return forvoProp.country;
     });
 
+    // Sort the return list, making it easy to use in the drop down.
     returnList.sort(
       function (country1, country2) {
         return country1.localeCompare(country2); 
     });
 
-    return new Set(returnList);
+    // Set ensures we only have 1 of each country.
+    return new Set([...returnList, ...currentListOfCountries]);
   }
 
   /*
@@ -70,10 +71,10 @@ export class App {
           + '&lang=' + this.selectedLang 
           + '&isFetchRecordingsEnabled=' + this.isFetchRecordingsEnabled)
         .then(data => {
-          this.listOfForvoObjs = JSON.parse(data.response).listOfForvoObjects;
+          this.listOfForvoObjs = JSON.parse(data.response); 
 
           // Let the user filter by the countries found for the words returned. 
-          this.filterableCountries = this.getCountryListFromForvoObj(this.listOfForvoObjs);
+          this.filterableCountries = this.getCountryListFromForvoObj(this.listOfForvoObjs, this.filterableCountries);
         });
       this.userPhrase = this.phrase;
       this.phrase = '';
@@ -81,7 +82,7 @@ export class App {
   }
 
   /*
-   * The list of languages user can process their phrase for.
+   * The list of languages a user can use to process their language.
    */ 
   getLangList() {
     let client = new HttpClient();
@@ -96,6 +97,26 @@ export class App {
   }
 
   /*
+   * Get the properties for a single word. 
+   */
+  getPropsForWord(forvoObj) {
+    var word = forvoObj.word;
+
+    if (word && this.selectedLang) {
+      let client = new HttpClient();
+      client.get('http://localhost:3000/voz/api/word?word=' + encodeURI(word) 
+          + '&lang=' + this.selectedLang)
+        .then(data => {
+          var forvoObjectResponse = JSON.parse(data.response)[0]; 
+          forvoObj.props = forvoObjectResponse.props;
+
+          // Let the user filter by the countries found for the words returned. 
+          this.filterableCountries = this.getCountryListFromForvoObj(this.listOfForvoObjs, this.filterableCountries);
+        });
+    }
+  }
+
+  /*
    * Let the user get a sample phrase for a quick demo of what the app will do.
    */
   getSamplePhrase() {
@@ -105,7 +126,7 @@ export class App {
         this.phrase = JSON.parse(data.response).phrase;
         this.selectedLang = JSON.parse(data.response).lang;
       });
-  }
+  }  
 
   /* 
    * Let user upload image to process its text into something we can hit Forvo with.
@@ -124,6 +145,19 @@ export class App {
         });
     }
   }
+
+  /*
+   * Check if features provided by external services are enabled.
+   */ 
+  isExternalServiceEnabled(serviceToCheck) {
+    let client = new HttpClient();
+    return client.get('http://localhost:3000/voz/api/external/' + serviceToCheck 
+      + '/isEnabled');
+  }
+
+  /*
+   * Helper functions for app.
+   */
 
   /*
    * Send a single file to the specified url.
