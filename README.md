@@ -13,12 +13,13 @@
 
 2. To enable the voice clips:
   1. Find the configExample.json file in the voz-da-gente/server/config folder and copy your api key into the "your_api_key_here_abc_123" placeholder text, e.g. 
+  2. Rename configExample.json to config.json 
+  3. When you're done, the config.json should look something like 
 ```json
 {
     "FORVO_API_KEY":"g1f5d9s888sc8ee7as8a5e2s6a3f4fwa"
 }
 ``` 
-  1. Rename configExample.json to config.json 
 3. To enable image upload and processing, you'll need a Google vision key file.
   * Follow [Google's instructions](https://cloud.google.com/vision/docs/common/auth#set_up_a_service_account) on how to create a key file. 
   * Then, save the Google key file into the voz-da-gente/server/config folder and name it googleVisionKeyfile.json
