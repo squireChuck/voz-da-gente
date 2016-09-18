@@ -38,9 +38,21 @@
     <div>
       <textarea spellcheck="false" rows="5" columns="40" name="text" value.bind="phrase"></textarea>
     <div>
+    <div>
+      <select value.bind="isFetchRecordingsEnabled">
+        <option value="true" selected>Parse phrase and get voice recordings</option>
+        <option value="false">Parse phrase without getting voice recordings</option>
+      </select>
+    </div>
     <div><button type="submit" disabled.bind="!isForvoEnabled">Get Forvos</button></div>
   </form>
-  <div><h2>Phrase</h2> ${userPhrase}</div>
+  <div id="phrase"><h2>Phrase</h2> ${userPhrase}</div>
+  <div>
+    <h2>Found words</h2>
+    <template repeat.for="forvoObj of listOfForvoObjs">
+      <a href="#${forvoObj.word}">${forvoObj.word}</a>,
+    </template>
+  </div>
   <div>
     <h2>Filter options</h2>
     <select id="filterGender" ref="filterGender">  
@@ -55,7 +67,7 @@
   </div>
   <h2>Words</h2>
   <div repeat.for="forvoObj of listOfForvoObjs">
-    <h3>${forvoObj.word}</h3>    
+    <h3 id="${forvoObj.word}">${forvoObj.word} (<a href="#phrase">Back to phrase</a>)</h3>    
       <div repeat.for="props of forvoObj.props |  forvoPropertyFilter:'gender':filterGender.value | forvoPropertyFilter:'country':filterCountry.value">
       <!-- preload="none" so that Forvo audio/api requests are only made for 
            the audio clips that are played. 

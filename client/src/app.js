@@ -6,12 +6,15 @@ export class App {
     this.heading = "Voz da gente";
     this.phrase = '';
     this.userPhrase = '';
+    this.foundWords = '';
     this.listOfForvoObjs = [];
     this.langList = [];
     this.selectedLang = 'pt'; // easy for my learning. :)
     this.filterableCountries = [];
     this.userImages;
     
+    this.isFetchRecordingsEnabled = true;
+
     // Enable/disable buttons if the external api's are config'd correctly. 
     this.isExternalServiceEnabled('forvo')
       .then(data => {
@@ -63,11 +66,12 @@ export class App {
   getForvos() {
     if (this.phrase && this.selectedLang) {
       let client = new HttpClient();
-      client.get('http://localhost:3000/voz/api/phrase?phrase=' + this.phrase 
-          + '&lang=' + this.selectedLang)
+      client.get('http://localhost:3000/voz/api/phrase?phrase=' + encodeURI(this.phrase) 
+          + '&lang=' + this.selectedLang 
+          + '&isFetchRecordingsEnabled=' + this.isFetchRecordingsEnabled)
         .then(data => {
-          this.listOfForvoObjs = JSON.parse(data.response);
-          
+          this.listOfForvoObjs = JSON.parse(data.response).listOfForvoObjects;
+
           // Let the user filter by the countries found for the words returned. 
           this.filterableCountries = this.getCountryListFromForvoObj(this.listOfForvoObjs);
         });

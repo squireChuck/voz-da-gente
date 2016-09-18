@@ -77,28 +77,50 @@ module.exports = function(app) {
     app.get('/voz/api/phrase', function (req, res) {
         var phrase = req.query.phrase;
         var lang = req.query.lang;
-        var wordsInPhrase = phrase.split(/\s\s*/);
-
-        // Build the httpOptions for each word.
-        var listOfHttpOptions = wordsInPhrase.map(
-            function(word) {
-                return new ForvoHttpOptions(word, lang);
-            });
-
-        console.log('Starting requests for: ' + wordsInPhrase.join(', '));
+        var isFetchRecordingsEnabled = req.query.isFetchRecordingsEnabled;
         
-        forvoService.getForvoObjects(listOfHttpOptions)
-            .then(results => {
-                console.log("In the phrase endpoint, I'm a promise now! :D");
-                res.send(results);
-            }, error => {
-                console.log("I'm broken in the phrase endpoint... :( ");
-                res.send("Unable to parse phrase request...");
+        // Getting words by delimiting on whitespaces and non-letter chars.
+        var phraseParsingPattern = /[\n\r\s]+|[^a-zA-Z'\u00C0-\u017F]+/;
+        var wordsInPhrase = Array.from(new Set(phrase.split(phraseParsingPattern)))
+            .sort(function (a, b) {
+                return a.toLowerCase().localeCompare(b.toLowerCase());
             });
+
+        var clientResponse = {};
+
+        // if (isFetchRecordingsEnabled === true) {
+            // Build the httpOptions for each word.
+            var listOfHttpOptions = wordsInPhrase.map(
+                function(word) {
+                    return new ForvoHttpOptions(word, lang);
+                });
+
+            console.log('Starting requests for: ' + wordsInPhrase.join(', '));
+            
+            forvoService.getForvoObjects(listOfHttpOptions)
+                .then(data => {
+                    console.log("In the phrase endpoint, I'm a promise now! :D");
+                    clientResponse.listOfForvoObjects = data;
+                    res.send(clientResponse);
+                }, error => {
+                    console.log("I'm broken in the phrase endpoint... :( ");
+                    res.send("Unable to parse phrase request...");
+                });
+            
+            return;
+        // }
+
+        // clientResponse = wordsInPhrase.forEach(function(word) {
+        //     return {"word" : word };
+        // });
+
+        // res.send(clientResponse);
+        // return;
+
     });
 
     // Use the word as is and return info if found.
-    app.get('/voz/api/word/', function(req, res) {
+    app.get('/voz/api/word', function(req, res) {
         var word = req.query.word;
         var lang = req.query.lang;
 

@@ -23,6 +23,10 @@ module.exports = function(app) {
                 return;
             });
     });
+
+    app.get('/voz/sampleApi/phrase', function(req, res) {
+
+    });
     
     app.get('/voz/api/samplePhrase', function(req, res) {
         // Sample phrases

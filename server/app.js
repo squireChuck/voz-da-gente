@@ -32,5 +32,5 @@ app.get('/voz', function(req,res){
 
 var listener = app.listen(port, function(){
     console.log('Listening on ' + JSON.stringify(listener.address()));
-    console.log('Listening on port ' + listener.address().port + '...'); 
+    console.log('Listening on port ' + listener.address().port + '...');
 });
