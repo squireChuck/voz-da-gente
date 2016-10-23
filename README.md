@@ -1,4 +1,5 @@
-﻿# voz-da-gente
+# voz-da-gente
+Aural aid for foreign language students to access native pronunciations when encountering a wide variety of new words. Also contains an image-to-text processor (via Google Cloud Vision) to help with books, magazines, etc. containing many unfamiliar words.
 
 ## Prereq's
 
@@ -14,23 +15,25 @@
 2. To enable the voice clips:
   1. Find the configExample.json file in the voz-da-gente/server/config folder and copy your api key into the "your_api_key_here_abc_123" placeholder text, e.g. 
   2. Rename configExample.json to config.json 
-  3. When you're done, the config.json should look something like 
+  3. When you're done, the config.json should look something like the following:
  ```json
  {
      "FORVO_API_KEY":"g1f5d9s888sc8ee7as8a5e2s6a3f4fwa"
  }
  ``` 
+ Note: this isn't a real key.
+ 
 3. To enable image upload and processing, you'll need a Google vision key file.
   * Follow [Google's instructions](https://cloud.google.com/vision/docs/common/auth#set_up_a_service_account) on how to create a key file. 
   * Then, save the Google key file into the voz-da-gente/server/config folder and name it googleVisionKeyfile.json
 
-3. Using your fav command prompt, nav to the voz-da-gente/server folder and run `npm install` to install the dependencies.
+4. Using your fav command prompt, nav to the voz-da-gente/server folder and run `npm install` to install the dependencies.
 
-4. Start the app by running `node app.js` in the voz-da-gente/server folder
+5. Start the app by running `node app.js` in the voz-da-gente/server folder
 
-5. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some text, you're all set!
+6. Check http://localhost:3000/voz/api/samplePhrase in your browser - if you get some text, you're all set!
 
-6. Once the app is running, visit it at http://localhost:3000/voz 
+7. Once the app is running, visit it at http://localhost:3000/voz 
 
 ## Goals
 
