@@ -6,8 +6,8 @@
       <img src="http://api.forvo.com/byforvoblue.gif" width="120" height="40" alt="Pronunciations by Forvo" style="border:0" />
     </a>
   </div>
-  <h2 if.bind="!isGoogleVisionEnabled || !isForvoEnabled ? true : false" style="color:red;">
-    Configuration problems...
+  <h2 if.bind="!isGoogleVisionEnabled || !isForvoEnabled ? true : false">
+    Configuration messages...
   </h2> 
     <div if.bind="!isGoogleVisionEnabled" style="color:red;">
       The Google Vision keyfile isn't configured correctly, so we can't process images right now... :(
