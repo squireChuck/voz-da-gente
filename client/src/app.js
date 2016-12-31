@@ -11,7 +11,7 @@ export class App {
     this.langList = [];
     this.selectedLang = 'pt'; // easy for my learning. :)
     this.filterableCountries = [];
-    this.userImages;
+    this.userImages = null;
     
     this.isFetchRecordingsEnabled = true;
 
@@ -67,9 +67,10 @@ export class App {
   getForvos() {
     if (this.phrase && this.selectedLang) {
       let client = new HttpClient();
-      client.get('http://localhost:3000/voz/api/phrase?phrase=' + encodeURI(this.phrase) 
-          + '&lang=' + this.selectedLang 
-          + '&isFetchRecordingsEnabled=' + this.isFetchRecordingsEnabled)
+      client.get('http://localhost:3000/voz/api/phrase?phrase=' + 
+        encodeURI(this.phrase) + 
+        '&lang=' + this.selectedLang + 
+        '&isFetchRecordingsEnabled=' + this.isFetchRecordingsEnabled)
         .then(data => {
           this.listOfForvoObjs = JSON.parse(data.response); 
 
@@ -104,8 +105,8 @@ export class App {
 
     if (word && this.selectedLang) {
       let client = new HttpClient();
-      client.get('http://localhost:3000/voz/api/word?word=' + encodeURI(word) 
-          + '&lang=' + this.selectedLang)
+      client.get('http://localhost:3000/voz/api/word?word=' + encodeURI(word) + 
+          '&lang=' + this.selectedLang)
         .then(data => {
           var forvoObjectResponse = JSON.parse(data.response)[0]; 
           forvoObj.props = forvoObjectResponse.props;
@@ -151,8 +152,7 @@ export class App {
    */ 
   isExternalServiceEnabled(serviceToCheck) {
     let client = new HttpClient();
-    return client.get('http://localhost:3000/voz/api/external/' + serviceToCheck 
-      + '/isEnabled');
+    return client.get('http://localhost:3000/voz/api/external/' + serviceToCheck + '/isEnabled');
   }
 
   /*
