@@ -51,9 +51,9 @@ module.exports = function(app) {
                 'phrase': 'You rock', 
                 'lang': 'en'
             }
-        ]
+        ];
 
         // Return random sample phrase.
         res.send(samplePhrases[Math.floor(Math.random() * samplePhrases.length)]);
     });
-}
+};

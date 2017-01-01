@@ -82,14 +82,13 @@ module.exports = function(app) {
         // Getting words by delimiting on whitespaces and non-letter chars.
         var phraseParsingPattern = /[\n\r\s]+|[^a-zA-Z'\u00C0-\u017F]+/;
         var wordsInPhrase = Array.from(new Set(phrase.split(phraseParsingPattern)))
+            .filter(function(word) {
+                // Removing blanks from results.
+                return word !== "";
+             })
             .sort(function (a, b) {
                 return a.toLowerCase().localeCompare(b.toLowerCase());
             });
-        
-        // Removing blanks from results.
-        var wordsInPhrase = wordsInPhrase.filter(function(word) {
-            return word != "";
-        });
 
         console.log('Starting requests for: ' + wordsInPhrase.join(', '));
         forvoService.getForvoObjects(wordsInPhrase, lang, isFetchRecordingsEnabled)
@@ -154,9 +153,9 @@ module.exports = function(app) {
                 });
         } else {
             isEnabled = false;
-        };
+        }
         
         res.send({"isEnabled": isEnabled});
         return;
     });
-}
+};

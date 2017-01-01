@@ -6,11 +6,11 @@ var qs = require('querystring');
 //  e.g. we can easily hit the Forvo api with different words or langs.
 function ForvoHttpOptions(word, lang) {
     this.word = word;
-    this.host = 'apifree.forvo.com',
+    this.host = 'apifree.forvo.com';
     // min-pronounciations over 5000 arbitrarily chosen - didn't want the list overwhelmingly long
-    this.langListPath = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/language-list/order/name/language/en/min-pronunciations/5000',
-    this.wordPath = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/word-pronunciations/word/' + qs.escape(this.word) + '/language/' + lang,
-    this.method = 'GET'  , 
+    this.langListPath = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/language-list/order/name/language/en/min-pronunciations/5000';
+    this.wordPath = '/key/' + envConfig.FORVO_API_KEY + '/format/json/action/word-pronunciations/word/' + qs.escape(this.word) + '/language/' + lang;
+    this.method = 'GET';
     
     
     this.getWordHttpOptions = function() {
@@ -19,7 +19,7 @@ function ForvoHttpOptions(word, lang) {
             'path': this.wordPath,
             'method': this.method 
         };
-    }
+    };
 
     this.getLangListHttpOptions = function() {
         return {
@@ -27,7 +27,7 @@ function ForvoHttpOptions(word, lang) {
             'path': this.langListPath,
             'method': this.method 
         };
-    }
+    };
 }  
 
 module.exports = ForvoHttpOptions;
