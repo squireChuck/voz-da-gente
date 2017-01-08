@@ -15,7 +15,6 @@ module.exports = function(app) {
                     return;
                 }
 
-                //console.log('Found text: ' + text[0].desc + ' for ' + sampleImage);
                 console.log('Found some text for ' + sampleImage);
                 console.log(text[0].desc.substring(0, 100));
                 res.send({'text' : text[0].desc}); // Send found labels.

@@ -41,12 +41,9 @@ module.exports = function(app) {
     });
 
     app.get('/voz/api/langs', function(req, res) {
-        // TODO This constructor call is silly looking - needs refactoring.
         var forvoHttpOptions = new ForvoHttpOptions('a', 'a');
         var jsonRes = '';
 
-        // TODO Determine if this should be in forvo service as new method, 
-        //      and some of the http request stuff consolidated. 
         var x = http.request(forvoHttpOptions.getLangListHttpOptions(), function(resX){
             resX.on('data', function(data){
                 jsonRes += data;
