@@ -1,4 +1,4 @@
-var gVisionService = require('../services/googleVisionService');
+var ocrService = require('../services/ocrService');
 
 module.exports = function(app) {
 
@@ -6,21 +6,8 @@ module.exports = function(app) {
         // Sample image on server...
         var sampleImage = 'sampleImages/nicolau1.jpg';
 
-        gVisionService.detectText(sampleImage, 
-            function (err, text) {
-                if (err) {
-                    console.log('Call to goog failed');
-                    console.log(err);
-                    res.send({'msg' : 'No luck!!!'});
-                    return;
-                }
-
-                console.log('Found some text for ' + sampleImage);
-                console.log(text[0].desc.substring(0, 100));
-                res.send({'text' : text[0].desc}); // Send found labels.
-
-                return;
-            });
+        ocrService.getTextFromImage(sampleImage)
+            .then(result => res.send(result));
     });
 
     app.get('/voz/sampleApi/phrase', function(req, res) {
