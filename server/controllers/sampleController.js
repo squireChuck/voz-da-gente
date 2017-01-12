@@ -4,10 +4,10 @@ module.exports = function(app) {
 
     app.get('/voz/api/sampleImage', function(req, res) {
         // Sample image on server...
-        var sampleImage = 'sampleImages/nicolau1.jpg';
+        var sampleImage = 'sampleImages/nicolau-crop.jpg';
 
         ocrService.getTextFromImage(sampleImage)
-            .then(result => res.send(result));
+            .then(result => res.send(result.text));
     });
 
     app.get('/voz/sampleApi/phrase', function(req, res) {
