@@ -1,7 +1,7 @@
 var bodyParser = require('body-parser');
 var ForvoHttpOptions = require('../models/forvoHttpOptions');
 var forvoService = require('../services/forvoService');
-var googleVisionService = require('../services/googleVisionService');
+// var googleVisionService = require('../services/googleVisionService');
 var http = require('http');
 
 function isExternalServiceEnabled(configFile, isEnabledCheck) {
