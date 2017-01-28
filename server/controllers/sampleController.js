@@ -9,10 +9,6 @@ module.exports = function(app) {
         ocrService.getTextFromImage(sampleImage)
             .then(result => res.send(result.text));
     });
-
-    app.get('/voz/sampleApi/phrase', function(req, res) {
-
-    });
     
     app.get('/voz/api/samplePhrase', function(req, res) {
         // Sample phrases
