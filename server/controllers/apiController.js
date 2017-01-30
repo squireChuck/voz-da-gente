@@ -1,7 +1,6 @@
 var bodyParser = require('body-parser');
 var ForvoHttpOptions = require('../models/forvoHttpOptions');
 var forvoService = require('../services/forvoService');
-// var googleVisionService = require('../services/googleVisionService');
 var http = require('http');
 
 function isExternalServiceEnabled(configFile, isEnabledCheck) {
@@ -22,22 +21,7 @@ module.exports = function(app) {
         // Sample image on server...
         console.log('POST endpoint for image...');
         var sampleImage = req.body.userImage;
-        googleVisionService.getTextFromImage(sampleImage, 
-            function (err, text) {
-                if (err) {
-                    console.log('Call to goog failed');
-                    console.log(err);
-                    res.send({'msg' : 'No luck!!!'});
-                    return;
-                }
-
-                console.log('Found some text!');
-                console.log(JSON.stringify(text).substring(0, 300));
-                console.log(text[0].textAnnotations[0].description.substring(0, 100));
-                res.send({'text' : text[0].textAnnotations[0].description}); // Send found labels.
-
-                return;
-            });
+        res.send("in development");
     });
 
     app.get('/voz/api/langs', function(req, res) {
