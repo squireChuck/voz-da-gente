@@ -9,7 +9,7 @@ export class App {
     this.foundWords = '';
     this.listOfForvoObjs = [];
     this.langList = [];
-    this.selectedLang = 'pt'; // easy for my learning. :)
+    this.selectedLang = 'pt'; // Set default lang in dropdown.
     this.filterableCountries = [];
     this.userImages = null;
     
