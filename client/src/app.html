@@ -6,14 +6,9 @@
       <img src="http://api.forvo.com/byforvoblue.gif" width="120" height="40" alt="Pronunciations by Forvo" style="border:0" />
     </a>
   </div>
-  <h2 if.bind="!isGoogleVisionEnabled || !isForvoEnabled ? true : false">
+  <h2 if.bind="!isForvoEnabled ? true : false">
     Configuration messages...
   </h2> 
-    <div if.bind="!isGoogleVisionEnabled" style="color:red;">
-      The Google Vision keyfile isn't configured correctly, so we can't process images right now... :(
-      Please see the <a href="https://github.com/squireChuck/voz-da-gente">Github page</a> for steps on how 
-      to set this up.
-    </div>
     <div if.bind="!isForvoEnabled" style="color:red;">
       The Forvo API key isn't configured correctly, so we can't give you audio links right now... :( 
       Please see the <a href="https://github.com/squireChuck/voz-da-gente">Github page</a> for steps on how to 
@@ -22,11 +17,6 @@
   <h2>Phrase entry</h2>
   <div>
     <button click.trigger="getSamplePhrase()" >Get sample phrase</button>
-  </div>
-  <div>
-    Get text from pic - 
-    <input type="file" accept="image/*" files.bind="userImages" disabled.bind="!isGoogleVisionEnabled">
-    <button click.trigger="getTextFromImage()" disabled.bind="!isGoogleVisionEnabled">Process image</button>
   </div>
   <form submit.trigger="getForvos()">
     <div>

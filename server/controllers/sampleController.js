@@ -1,13 +1,11 @@
-var ocrService = require('../services/ocrService');
-
 module.exports = function(app) {
 
     app.get('/voz/api/sampleImage', function(req, res) {
         // Sample image on server...
         var sampleImage = 'sampleImages/nicolau1.jpg';
 
-        ocrService.getTextFromImage(sampleImage)
-            .then(result => res.send(result.text));
+        // ocrService.getTextFromImage(sampleImage)
+        //     .then(result => res.send(result.text));
     });
     
     app.get('/voz/api/samplePhrase', function(req, res) {

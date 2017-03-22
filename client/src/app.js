@@ -21,10 +21,7 @@ export class App {
         this.isForvoEnabled = JSON.parse(data.response).isEnabled;
       });
 
-    this.isExternalServiceEnabled('googleVision')
-      .then(data => {
-        this.isGoogleVisionEnabled = JSON.parse(data.response).isEnabled;
-      });
+    this.isGoogleVisionEnabled = false;
 
     this.getLangList();
   }
